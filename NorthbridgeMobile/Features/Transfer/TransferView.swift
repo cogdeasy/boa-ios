@@ -89,24 +89,20 @@ struct TransferView: View {
     }
 
     private func accountPicker(selection: Binding<String>, label: String) -> some View {
-        Picker(label, selection: selection) {
-            ForEach(store.accounts, id: \.accountNumber) { account in
-                VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 4) {
+            Picker(label, selection: selection) {
+                ForEach(store.accounts, id: \.accountNumber) { account in
                     Text("\(account.displayName) \(AccountNumbers.shortMask(account.accountNumber))")
+                        .tag(account.accountNumber)
                 }
-                .tag(account.accountNumber)
             }
-        }
-        .pickerStyle(.menu)
-        .overlay(alignment: .leading) {
+            .pickerStyle(.menu)
             if let account = store.account(number: selection.wrappedValue) {
                 Text("Available \(account.availableBalance.formatted)")
                     .font(.caption)
                     .foregroundColor(.secondary)
-                    .offset(y: 18)
             }
         }
-        .padding(.bottom, 10)
     }
 }
 
