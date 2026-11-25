@@ -1,0 +1,92 @@
+name: NorthbridgeMobile
+options:
+  bundleIdPrefix: com.northbridge
+  deploymentTarget:
+    iOS: "15.0"
+  developmentLanguage: en
+  createIntermediateGroups: true
+configs:
+  Debug: debug
+  Mock: debug
+  Release: release
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "4.12.0"
+    CURRENT_PROJECT_VERSION: "1187"
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+packages:
+  SnapKit:
+    url: https://github.com/SnapKit/SnapKit
+    exactVersion: 5.0.1
+  NBFoundation:
+    path: Packages/NBFoundation
+targets:
+  NorthbridgeMobile:
+    type: application
+    platform: iOS
+    sources:
+      - path: NorthbridgeMobile
+        excludes:
+          - "Config/Info.plist"
+    dependencies:
+      - package: SnapKit
+      - package: NBFoundation
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.northbridge.mobile
+        PRODUCT_NAME: NorthbridgeMobile
+        INFOPLIST_FILE: NorthbridgeMobile/Config/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        TARGETED_DEVICE_FAMILY: "1"
+        NB_DISPLAY_NAME: Northbridge
+      configs:
+        Mock:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG MOCK_API
+          PRODUCT_BUNDLE_IDENTIFIER: com.northbridge.mobile.mock
+          NB_DISPLAY_NAME: Northbridge
+        Debug:
+          PRODUCT_BUNDLE_IDENTIFIER: com.northbridge.mobile.dev
+          NB_DISPLAY_NAME: NB Dev
+  NorthbridgeMobileTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: NorthbridgeMobileTests
+    dependencies:
+      - target: NorthbridgeMobile
+      - package: NBFoundation
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.northbridge.mobile.tests
+schemes:
+  NorthbridgeMobile:
+    build:
+      targets:
+        NorthbridgeMobile: all
+        NorthbridgeMobileTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      gatherCoverageData: true
+      targets:
+        - NorthbridgeMobileTests
+    archive:
+      config: Release
+  NorthbridgeMobile-Mock:
+    build:
+      targets:
+        NorthbridgeMobile: all
+        NorthbridgeMobileTests: [test]
+    run:
+      config: Mock
+    test:
+      config: Mock
+      gatherCoverageData: true
+      targets:
+        - NorthbridgeMobileTests
+    archive:
+      config: Mock
