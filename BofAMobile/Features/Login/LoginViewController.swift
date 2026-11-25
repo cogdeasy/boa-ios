@@ -5,8 +5,8 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
 
     var onSignedIn: (() -> Void)?
 
-    private let logoView = UIImageView(image: UIImage(systemName: "building.columns.fill"))
-    private let brandLabel = UILabel()
+    private let logoPlate = UIView()
+    private let logoView = UIImageView(image: UIImage(named: "BofALogo"))
     private let taglineLabel = UILabel()
     private let card = UIView()
     private let onlineIdField = UITextField()
@@ -32,12 +32,14 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
     }
 
     private func buildLayout() {
-        logoView.tintColor = Theme.accent
-        logoView.contentMode = .scaleAspectFit
+        logoPlate.backgroundColor = .white
+        logoPlate.layer.cornerRadius = 14
 
-        brandLabel.text = "Bank of America"
-        brandLabel.font = UIFont.systemFont(ofSize: 34, weight: .bold)
-        brandLabel.textColor = .white
+        logoView.contentMode = .scaleAspectFit
+        logoView.isAccessibilityElement = true
+        logoView.accessibilityLabel = "Bank of America"
+        logoView.accessibilityTraits = .image
+        logoView.accessibilityIdentifier = "login.logo"
 
         taglineLabel.text = "MOBILE BANKING"
         taglineLabel.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
@@ -84,21 +86,23 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
             environmentLabel.text = "\(AppEnvironment.current.name.rawValue) · \(AppEnvironment.current.coreBankingBaseURL.host ?? "")"
         }
 
-        [logoView, brandLabel, taglineLabel, card, environmentLabel].forEach(view.addSubview)
+        [logoPlate, taglineLabel, card, environmentLabel].forEach(view.addSubview)
+        logoPlate.addSubview(logoView)
         [onlineIdField, passcodeField, rememberLabel, rememberSwitch, signInButton].forEach(card.addSubview)
         signInButton.addSubview(spinner)
 
-        logoView.snp.makeConstraints { make in
+        logoPlate.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(56)
-            make.centerX.equalToSuperview()
-            make.size.equalTo(64)
+            make.leading.trailing.equalToSuperview().inset(20)
         }
-        brandLabel.snp.makeConstraints { make in
-            make.top.equalTo(logoView.snp.bottom).offset(12)
-            make.centerX.equalToSuperview()
+        logoView.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(UIEdgeInsets(top: 22, left: 24, bottom: 22, right: 24))
+            if let logo = logoView.image {
+                make.height.equalTo(logoView.snp.width).multipliedBy(logo.size.height / logo.size.width)
+            }
         }
         taglineLabel.snp.makeConstraints { make in
-            make.top.equalTo(brandLabel.snp.bottom).offset(2)
+            make.top.equalTo(logoPlate.snp.bottom).offset(12)
             make.centerX.equalToSuperview()
         }
         card.snp.makeConstraints { make in
