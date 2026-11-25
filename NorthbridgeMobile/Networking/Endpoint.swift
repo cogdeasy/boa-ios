@@ -42,6 +42,10 @@ extension Endpoint {
 
     // MARK: core-banking
 
+    static var currentCustomer: Endpoint {
+        .get(.coreBanking, "/customers/me")
+    }
+
     static func customer(cif: String) -> Endpoint {
         .get(.coreBanking, "/customers/\(cif)")
     }

@@ -22,6 +22,19 @@ final class MockBackendTests: XCTestCase {
         XCTAssertEqual(reply.status, 401)
     }
 
+    func testCurrentCustomerResolvesSignedInCustomer() throws {
+        let reply = backend.handle(method: "GET", url: base.appendingPathComponent("customers/me"),
+                                   headers: auth(), body: nil)
+        XCTAssertEqual(reply.status, 200)
+        XCTAssertEqual(try JSONDecoder().decode(Customer.self, from: reply.body).cif, "100000001")
+    }
+
+    func testCurrentCustomerIsForbiddenForTeller() {
+        let reply = backend.handle(method: "GET", url: base.appendingPathComponent("customers/me"),
+                                   headers: auth("teller01", "Teller#2019"), body: nil)
+        XCTAssertEqual(reply.status, 403)
+    }
+
     func testCustomerCannotReadAnotherCustomersAccount() {
         let reply = backend.handle(method: "GET", url: base.appendingPathComponent("accounts/211000048218"),
                                    headers: auth(), body: nil)

@@ -116,6 +116,8 @@ final class MockBackend {
         let parts = path.split(separator: "/").map(String.init)
 
         switch (method, parts.count, parts.first) {
+        case ("GET", 2, "customers") where parts[1] == "me":
+            return getCurrentCustomer(user: user)
         case ("GET", 2, "customers"):
             return getCustomer(parts[1], user: user)
         case ("GET", 3, "customers") where parts[2] == "accounts":
@@ -145,6 +147,12 @@ final class MockBackend {
     }
 
     // MARK: - core-banking
+
+    private func getCurrentCustomer(user: User) -> Reply {
+        guard user.role == "CUSTOMER", let cif = user.cif else { return error(403, "FORBIDDEN", "Access is denied") }
+        guard let customer = customers[cif] else { return error(404, "CUSTOMER_NOT_FOUND", "Customer not found") }
+        return ok(customer)
+    }
 
     private func getCustomer(_ cif: String, user: User) -> Reply {
         guard canAccess(cif: cif, user: user) else { return error(403, "FORBIDDEN", "Access is denied") }

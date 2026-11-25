@@ -21,20 +21,16 @@ final class SessionManager {
         self.client = client
     }
 
-    /// Credentials are verified by loading the customer profile with HTTP Basic.
+    /// Credentials are verified with HTTP Basic by loading the signed-in customer's
+    /// record from /customers/me, which also resolves the CIF.
     func signIn(onlineId: String, passcode: String, completion: @escaping (Result<Customer, APIError>) -> Void) {
         let trimmedId = onlineId.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedId.isEmpty, !passcode.isEmpty else {
             completion(.failure(.invalidRequest))
             return
         }
-        guard let cif = CustomerDirectory.cif(forOnlineId: trimmedId) else {
-            completion(.failure(.unauthorized))
-            return
-        }
-
         client.basicCredentials = (trimmedId, passcode)
-        client.send(.customer(cif: cif), as: Customer.self) { [weak self] result in
+        client.send(.currentCustomer, as: Customer.self) { [weak self] result in
             switch result {
             case .success(let customer):
                 self?.onlineId = trimmedId

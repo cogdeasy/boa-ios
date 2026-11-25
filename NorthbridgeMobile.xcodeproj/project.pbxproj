@@ -21,7 +21,6 @@
 		54498E6FDABD8021E155FC4A /* NetworkLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA9F2F9FA717085DD2F960 /* NetworkLogger.swift */; };
 		5799E72A9A40CE5BC50FFF79 /* EndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2BE307BA18438EB2A26273 /* EndpointTests.swift */; };
 		5D9115244A9CA44863BD6393 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7810C347A0CBB2BFE6835E /* APIError.swift */; };
-		632143ED24AC6F81E3EF330F /* CustomerDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D611394185ED3D83D64F78C0 /* CustomerDirectory.swift */; };
 		6454B08354103661FF0692D3 /* BillPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F575EB8A7AE477DF146DDF /* BillPayView.swift */; };
 		6DCDE5BE1D0299E1477635BB /* PaymentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D284C6F8C46132B0CAECB29 /* PaymentsViewModel.swift */; };
 		725E263D67C84694C2420D43 /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51571A5ED46B55F8DE622E2 /* Customer.swift */; };
@@ -94,7 +93,6 @@
 		B08851DDAF9DC3FED355DB19 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		C283AD3337BD73571FFF7A1B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D59D52D7856F6BAD3C3F7A97 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
-		D611394185ED3D83D64F78C0 /* CustomerDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerDirectory.swift; sourceTree = "<group>"; };
 		D91DF2DBEC6B2C7BD5B4C0B4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D9460B203008F795CEC3F46D /* CredentialStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialStore.swift; sourceTree = "<group>"; };
 		DB6C1762609E08F3F70F33E3 /* TransferService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferService.swift; sourceTree = "<group>"; };
@@ -143,7 +141,6 @@
 			children = (
 				4416E213478378885E7FD08F /* AccountService.swift */,
 				D9460B203008F795CEC3F46D /* CredentialStore.swift */,
-				D611394185ED3D83D64F78C0 /* CustomerDirectory.swift */,
 				AEE1A0EEA46D98097BCA81C3 /* PaymentsService.swift */,
 				9A76AD032E87205F51341A9E /* SessionManager.swift */,
 				DB6C1762609E08F3F70F33E3 /* TransferService.swift */,
@@ -450,7 +447,6 @@
 				6454B08354103661FF0692D3 /* BillPayView.swift in Sources */,
 				FDF8E554B808393C4BDA75DB /* CredentialStore.swift in Sources */,
 				725E263D67C84694C2420D43 /* Customer.swift in Sources */,
-				632143ED24AC6F81E3EF330F /* CustomerDirectory.swift in Sources */,
 				7D9D23C773A84FAF011A14CD /* DeepLinkRouter.swift in Sources */,
 				30E39EE8050ADEC8F8563F30 /* Endpoint.swift in Sources */,
 				74F52AF23FBA00934AFB9A2D /* LoginViewController.swift in Sources */,

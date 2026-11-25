@@ -18,7 +18,7 @@ and send money to other people.
 
 | Screen | Tech | Backend calls |
 |---|---|---|
-| Sign in | UIKit (`LoginViewController`) | `GET /customers/{cif}` (HTTP Basic) |
+| Sign in | UIKit (`LoginViewController`) | `GET /customers/me` (HTTP Basic) |
 | Accounts overview | UIKit (`AccountsViewController`) | `GET /customers/{cif}/accounts` |
 | Account activity + search | UIKit (`TransactionsViewController`, `UISearchController`) | `GET /accounts/{n}`, `GET /accounts/{n}/transactions`, `GET /transactions/search` |
 | Transfer between own accounts | SwiftUI (`TransferView`) | `POST /transfers` |
@@ -71,7 +71,7 @@ NorthbridgeMobile/
   Config/         AppEnvironment (per-build base URLs), Info.plist
   Networking/     APIClient (URLSession), Endpoint, APIError, NetworkLogger
   Services/       SessionManager, AccountService + AccountsStore, TransferService, PaymentsService,
-                  CredentialStore, CustomerDirectory
+                  CredentialStore
   Models/         Codable models matching the platform API contract
   Features/       Login, Accounts, Transactions (UIKit) · Transfer, Payments (SwiftUI) · More
   Routing/        DeepLinkRouter (northbridge:// links)
@@ -95,10 +95,9 @@ NorthbridgeMobileTests/  XCTest unit tests
 
 All calls follow the Northbridge Core Platform API contract (`docs/API.md` in the core platform repo).
 
-1. **Sign in.** core-banking authenticates with HTTP Basic against its user store. There is no token
-   endpoint yet, so the app maps the Online ID to the customer's CIF (`CustomerDirectory`, captured at
-   enrollment) and verifies the credentials by calling `GET /customers/{cif}`. A `401` means bad
-   credentials. Every later request carries the same Basic header.
+1. **Sign in.** core-banking authenticates with HTTP Basic against its user store. The app verifies the
+   credentials and resolves the customer's CIF by calling `GET /customers/me` (CUSTOMER role only; teller
+   and ops users get `403`). A `401` means bad credentials. Every later request carries the same Basic header.
 2. **Accounts.** `GET /customers/{cif}/accounts` returns `Account` objects with ledger, available and hold
    balances. The `CUSTOMER` role only sees its own accounts (`403` otherwise).
 3. **Activity.** `GET /accounts/{n}/transactions?page=0&size=50` for the list; search uses
