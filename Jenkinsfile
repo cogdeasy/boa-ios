@@ -1,4 +1,4 @@
-// Northbridge Mobile iOS - mobile-platform Jenkins (macOS agents)
+// Bank of America Mobile Banking iOS - mobile-platform Jenkins (macOS agents)
 pipeline {
     agent { label 'macos-xcode' }
 
@@ -10,7 +10,7 @@ pipeline {
 
     environment {
         LANG = 'en_US.UTF-8'
-        SCHEME = 'NorthbridgeMobile-Mock'
+        SCHEME = 'BofAMobile-Mock'
         DESTINATION = 'platform=iOS Simulator,name=iPhone 17'
     }
 
@@ -25,8 +25,8 @@ pipeline {
             when { branch 'release/*' }
             steps {
                 sh '''
-                  xcodebuild -project NorthbridgeMobile.xcodeproj -scheme NorthbridgeMobile \
-                    -configuration Release -archivePath build/NorthbridgeMobile.xcarchive archive
+                  xcodebuild -project BofAMobile.xcodeproj -scheme BofAMobile \
+                    -configuration Release -archivePath build/BofAMobile.xcarchive archive
                 '''
             }
         }
@@ -37,7 +37,7 @@ pipeline {
             archiveArtifacts artifacts: 'build/reports/**', allowEmptyArchive: true
         }
         failure {
-            mail to: 'mobile-ios@northbridgefederal.com',
+            mail to: 'mobile-ios@bofa.com',
                  subject: "FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                  body: "${env.BUILD_URL}"
         }

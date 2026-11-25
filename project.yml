@@ -1,6 +1,6 @@
-name: NorthbridgeMobile
+name: BofAMobile
 options:
-  bundleIdPrefix: com.northbridge
+  bundleIdPrefix: com.bofa
   deploymentTarget:
     iOS: "15.0"
   developmentLanguage: en
@@ -20,73 +20,73 @@ packages:
   SnapKit:
     url: https://github.com/SnapKit/SnapKit
     exactVersion: 5.0.1
-  NBFoundation:
-    path: Packages/NBFoundation
+  BoAFoundation:
+    path: Packages/BoAFoundation
 targets:
-  NorthbridgeMobile:
+  BofAMobile:
     type: application
     platform: iOS
     sources:
-      - path: NorthbridgeMobile
+      - path: BofAMobile
         excludes:
           - "Config/Info.plist"
     dependencies:
       - package: SnapKit
-      - package: NBFoundation
+      - package: BoAFoundation
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.northbridge.mobile
-        PRODUCT_NAME: NorthbridgeMobile
-        INFOPLIST_FILE: NorthbridgeMobile/Config/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.bofa.mobile
+        PRODUCT_NAME: BofAMobile
+        INFOPLIST_FILE: BofAMobile/Config/Info.plist
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         TARGETED_DEVICE_FAMILY: "1"
-        NB_DISPLAY_NAME: Northbridge
+        BOA_DISPLAY_NAME: BofA
       configs:
         Mock:
           SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG MOCK_API
-          PRODUCT_BUNDLE_IDENTIFIER: com.northbridge.mobile.mock
-          NB_DISPLAY_NAME: Northbridge
+          PRODUCT_BUNDLE_IDENTIFIER: com.bofa.mobile.mock
+          BOA_DISPLAY_NAME: BofA
         Debug:
-          PRODUCT_BUNDLE_IDENTIFIER: com.northbridge.mobile.dev
-          NB_DISPLAY_NAME: NB Dev
-  NorthbridgeMobileTests:
+          PRODUCT_BUNDLE_IDENTIFIER: com.bofa.mobile.dev
+          BOA_DISPLAY_NAME: BofA Dev
+  BofAMobileTests:
     type: bundle.unit-test
     platform: iOS
     sources:
-      - path: NorthbridgeMobileTests
+      - path: BofAMobileTests
     dependencies:
-      - target: NorthbridgeMobile
-      - package: NBFoundation
+      - target: BofAMobile
+      - package: BoAFoundation
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
-        PRODUCT_BUNDLE_IDENTIFIER: com.northbridge.mobile.tests
+        PRODUCT_BUNDLE_IDENTIFIER: com.bofa.mobile.tests
 schemes:
-  NorthbridgeMobile:
+  BofAMobile:
     build:
       targets:
-        NorthbridgeMobile: all
-        NorthbridgeMobileTests: [test]
+        BofAMobile: all
+        BofAMobileTests: [test]
     run:
       config: Debug
     test:
       config: Debug
       gatherCoverageData: true
       targets:
-        - NorthbridgeMobileTests
+        - BofAMobileTests
     archive:
       config: Release
-  NorthbridgeMobile-Mock:
+  BofAMobile-Mock:
     build:
       targets:
-        NorthbridgeMobile: all
-        NorthbridgeMobileTests: [test]
+        BofAMobile: all
+        BofAMobileTests: [test]
     run:
       config: Mock
     test:
       config: Mock
       gatherCoverageData: true
       targets:
-        - NorthbridgeMobileTests
+        - BofAMobileTests
     archive:
       config: Mock

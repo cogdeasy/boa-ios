@@ -9,7 +9,7 @@ set -eo pipefail
 cd "$(dirname "$0")/.."
 
 DEVICE="${DEVICE:-iPhone 17}"
-SCHEME="${SCHEME:-NorthbridgeMobile-Mock}"
+SCHEME="${SCHEME:-BofAMobile-Mock}"
 CONFIG="${CONFIG:-Mock}"
 DERIVED_DATA="build/DerivedData"
 
@@ -22,10 +22,10 @@ xcrun simctl boot "$UDID" 2>/dev/null || true
 xcrun simctl bootstatus "$UDID" -b >/dev/null
 open -a Simulator --args -CurrentDeviceUDID "$UDID" 2>/dev/null || true
 
-xcodebuild -project NorthbridgeMobile.xcodeproj -scheme "$SCHEME" -configuration "$CONFIG" \
+xcodebuild -project BofAMobile.xcodeproj -scheme "$SCHEME" -configuration "$CONFIG" \
   -destination "id=$UDID" -derivedDataPath "$DERIVED_DATA" build CODE_SIGNING_ALLOWED=NO | tail -1
 
-APP="$DERIVED_DATA/Build/Products/$CONFIG-iphonesimulator/NorthbridgeMobile.app"
+APP="$DERIVED_DATA/Build/Products/$CONFIG-iphonesimulator/BofAMobile.app"
 BUNDLE_ID=$(/usr/libexec/PlistBuddy -c "Print CFBundleIdentifier" "$APP/Info.plist")
 xcrun simctl install "$UDID" "$APP"
 xcrun simctl launch "$UDID" "$BUNDLE_ID"
